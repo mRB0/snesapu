@@ -1,0 +1,1476 @@
+ 0000                   cpu LMM
+                        .module main.c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile ./main.c
+ 0000                   .dbfunc e go_data_output _go_data_output fV
+ 0000           _go_data_output::
+ 0000                   .dbline -1
+ 0000                   .dbline 20
+ 0000           ; //----------------------------------------------------------------------------
+ 0000           ; // C main line
+ 0000           ; //----------------------------------------------------------------------------
+ 0000           ; 
+ 0000           ; #include <m8c.h>        // part specific constants and macros
+ 0000           ; #include "PSoCAPI.h"    // PSoC API definitions for all User Modules
+ 0000           ; #include "apu_psoc.h"
+ 0000           ; 
+ 0000           ; //#define ADDR_DEBUG
+ 0000           ; 
+ 0000           ; #define UART_FLUSH()          while (!(UART_bReadTxStatus() & UART_TX_BUFFER_EMPTY)) \
+ 0000           ;                               { /* wait for buffer empty */ }                    \
+ 0000           ;                               UART_bReadTxStatus(); /* clear TX_COMPLETE */        \
+ 0000           ;                               while (!(UART_bReadTxStatus() & UART_TX_COMPLETE))     \
+ 0000           ;                               { /* wait for TX_COMPLETE */ }
+ 0000           ; 
+ 0000           ; 
+ 0000           ; 
+ 0000           ; void go_data_output(void)
+ 0000           ; {
+ 0000                   .dbline 21
+ 0000           ;       GO_OUTPUT(D0_PORT, D0_PIN);
+ 0000 430B10            or REG[0xb],16
+ 0003                   .dbline 21
+ 0003 7110              or F,0x10  ; iopage = 1
+ 0005 4109EF            and REG[0x9],-17
+ 0008 70EF              and F,0xEF ; iopage = 0
+ 000A                   .dbline 21
+ 000A 7110              or F,0x10  ; iopage = 1
+ 000C 430810            or REG[0x8],16
+ 000F 70EF              and F,0xEF ; iopage = 0
+ 0011                   .dbline 22
+ 0011           ;       GO_OUTPUT(D1_PORT, D1_PIN);
+ 0011 430B20            or REG[0xb],32
+ 0014                   .dbline 22
+ 0014 7110              or F,0x10  ; iopage = 1
+ 0016 4109DF            and REG[0x9],-33
+ 0019 70EF              and F,0xEF ; iopage = 0
+ 001B                   .dbline 22
+ 001B 7110              or F,0x10  ; iopage = 1
+ 001D 430820            or REG[0x8],32
+ 0020 70EF              and F,0xEF ; iopage = 0
+ 0022                   .dbline 23
+ 0022           ;       GO_OUTPUT(D2_PORT, D2_PIN);
+ 0022 430B40            or REG[0xb],64
+ 0025                   .dbline 23
+ 0025 7110              or F,0x10  ; iopage = 1
+ 0027 4109BF            and REG[0x9],-65
+ 002A 70EF              and F,0xEF ; iopage = 0
+ 002C                   .dbline 23
+ 002C 7110              or F,0x10  ; iopage = 1
+ 002E 430840            or REG[0x8],64
+ 0031 70EF              and F,0xEF ; iopage = 0
+ 0033                   .dbline 24
+ 0033           ;       GO_OUTPUT(D3_PORT, D3_PIN);
+ 0033 430B08            or REG[0xb],8
+ 0036                   .dbline 24
+ 0036 7110              or F,0x10  ; iopage = 1
+ 0038 4109F7            and REG[0x9],-9
+ 003B 70EF              and F,0xEF ; iopage = 0
+ 003D                   .dbline 24
+ 003D 7110              or F,0x10  ; iopage = 1
+ 003F 430808            or REG[0x8],8
+ 0042 70EF              and F,0xEF ; iopage = 0
+ 0044                   .dbline 25
+ 0044           ;       GO_OUTPUT(D4_PORT, D4_PIN);
+ 0044 430301            or REG[0x3],1
+ 0047                   .dbline 25
+ 0047 7110              or F,0x10  ; iopage = 1
+ 0049 4101FE            and REG[0x1],-2
+ 004C 70EF              and F,0xEF ; iopage = 0
+ 004E                   .dbline 25
+ 004E 7110              or F,0x10  ; iopage = 1
+ 0050 430001            or REG[ 0],1
+ 0053 70EF              and F,0xEF ; iopage = 0
+ 0055                   .dbline 26
+ 0055           ;       GO_OUTPUT(D5_PORT, D5_PIN);
+ 0055 430B02            or REG[0xb],2
+ 0058                   .dbline 26
+ 0058 7110              or F,0x10  ; iopage = 1
+ 005A 4109FD            and REG[0x9],-3
+ 005D 70EF              and F,0xEF ; iopage = 0
+ 005F                   .dbline 26
+ 005F 7110              or F,0x10  ; iopage = 1
+ 0061 430802            or REG[0x8],2
+ 0064 70EF              and F,0xEF ; iopage = 0
+ 0066                   .dbline 27
+ 0066           ;       GO_OUTPUT(D6_PORT, D6_PIN);
+ 0066 430304            or REG[0x3],4
+ 0069                   .dbline 27
+ 0069 7110              or F,0x10  ; iopage = 1
+ 006B 4101FB            and REG[0x1],-5
+ 006E 70EF              and F,0xEF ; iopage = 0
+ 0070                   .dbline 27
+ 0070 7110              or F,0x10  ; iopage = 1
+ 0072 430004            or REG[ 0],4
+ 0075 70EF              and F,0xEF ; iopage = 0
+ 0077                   .dbline 28
+ 0077           ;       GO_OUTPUT(D7_PORT, D7_PIN);
+ 0077 430740            or REG[0x7],64
+ 007A                   .dbline 28
+ 007A 7110              or F,0x10  ; iopage = 1
+ 007C 4105BF            and REG[0x5],-65
+ 007F 70EF              and F,0xEF ; iopage = 0
+ 0081                   .dbline 28
+ 0081 7110              or F,0x10  ; iopage = 1
+ 0083 430440            or REG[0x4],64
+ 0086 70EF              and F,0xEF ; iopage = 0
+ 0088                   .dbline -2
+ 0088                   .dbline 29
+ 0088           ; }
+ 0088           L1:
+ 0088                   .dbline 0 ; func end
+ 0088 7F                ret
+ 0089                   .dbend
+ 0089                   .dbfunc e go_data_input _go_data_input fV
+ 0089           _go_data_input::
+ 0089                   .dbline -1
+ 0089                   .dbline 32
+ 0089           ; 
+ 0089           ; void go_data_input(void)
+ 0089           ; {
+ 0089                   .dbline 33
+ 0089           ;       GO_INPUT(D0_PORT, D0_PIN);
+ 0089 410BEF            and REG[0xb],-17
+ 008C                   .dbline 33
+ 008C 7110              or F,0x10  ; iopage = 1
+ 008E 430910            or REG[0x9],16
+ 0091 70EF              and F,0xEF ; iopage = 0
+ 0093                   .dbline 33
+ 0093 7110              or F,0x10  ; iopage = 1
+ 0095 430810            or REG[0x8],16
+ 0098 70EF              and F,0xEF ; iopage = 0
+ 009A                   .dbline 33
+ 009A 430810            or REG[0x8],16
+ 009D                   .dbline 34
+ 009D           ;       GO_INPUT(D1_PORT, D1_PIN);
+ 009D 410BDF            and REG[0xb],-33
+ 00A0                   .dbline 34
+ 00A0 7110              or F,0x10  ; iopage = 1
+ 00A2 430920            or REG[0x9],32
+ 00A5 70EF              and F,0xEF ; iopage = 0
+ 00A7                   .dbline 34
+ 00A7 7110              or F,0x10  ; iopage = 1
+ 00A9 430820            or REG[0x8],32
+ 00AC 70EF              and F,0xEF ; iopage = 0
+ 00AE                   .dbline 34
+ 00AE 430820            or REG[0x8],32
+ 00B1                   .dbline 35
+ 00B1           ;       GO_INPUT(D2_PORT, D2_PIN);
+ 00B1 410BBF            and REG[0xb],-65
+ 00B4                   .dbline 35
+ 00B4 7110              or F,0x10  ; iopage = 1
+ 00B6 430940            or REG[0x9],64
+ 00B9 70EF              and F,0xEF ; iopage = 0
+ 00BB                   .dbline 35
+ 00BB 7110              or F,0x10  ; iopage = 1
+ 00BD 430840            or REG[0x8],64
+ 00C0 70EF              and F,0xEF ; iopage = 0
+ 00C2                   .dbline 35
+ 00C2 430840            or REG[0x8],64
+ 00C5                   .dbline 36
+ 00C5           ;       GO_INPUT(D3_PORT, D3_PIN);
+ 00C5 410BF7            and REG[0xb],-9
+ 00C8                   .dbline 36
+ 00C8 7110              or F,0x10  ; iopage = 1
+ 00CA 430908            or REG[0x9],8
+ 00CD 70EF              and F,0xEF ; iopage = 0
+ 00CF                   .dbline 36
+ 00CF 7110              or F,0x10  ; iopage = 1
+ 00D1 430808            or REG[0x8],8
+ 00D4 70EF              and F,0xEF ; iopage = 0
+ 00D6                   .dbline 36
+ 00D6 430808            or REG[0x8],8
+ 00D9                   .dbline 37
+ 00D9           ;       GO_INPUT(D4_PORT, D4_PIN);
+ 00D9 4103FE            and REG[0x3],-2
+ 00DC                   .dbline 37
+ 00DC 7110              or F,0x10  ; iopage = 1
+ 00DE 430101            or REG[0x1],1
+ 00E1 70EF              and F,0xEF ; iopage = 0
+ 00E3                   .dbline 37
+ 00E3 7110              or F,0x10  ; iopage = 1
+ 00E5 430001            or REG[ 0],1
+ 00E8 70EF              and F,0xEF ; iopage = 0
+ 00EA                   .dbline 37
+ 00EA 430001            or REG[ 0],1
+ 00ED                   .dbline 38
+ 00ED           ;       GO_INPUT(D5_PORT, D5_PIN);
+ 00ED 410BFD            and REG[0xb],-3
+ 00F0                   .dbline 38
+ 00F0 7110              or F,0x10  ; iopage = 1
+ 00F2 430902            or REG[0x9],2
+ 00F5 70EF              and F,0xEF ; iopage = 0
+ 00F7                   .dbline 38
+ 00F7 7110              or F,0x10  ; iopage = 1
+ 00F9 430802            or REG[0x8],2
+ 00FC 70EF              and F,0xEF ; iopage = 0
+ 00FE                   .dbline 38
+ 00FE 430802            or REG[0x8],2
+ 0101                   .dbline 39
+ 0101           ;       GO_INPUT(D6_PORT, D6_PIN);
+ 0101 4103FB            and REG[0x3],-5
+ 0104                   .dbline 39
+ 0104 7110              or F,0x10  ; iopage = 1
+ 0106 430104            or REG[0x1],4
+ 0109 70EF              and F,0xEF ; iopage = 0
+ 010B                   .dbline 39
+ 010B 7110              or F,0x10  ; iopage = 1
+ 010D 430004            or REG[ 0],4
+ 0110 70EF              and F,0xEF ; iopage = 0
+ 0112                   .dbline 39
+ 0112 430004            or REG[ 0],4
+ 0115                   .dbline 40
+ 0115           ;       GO_INPUT(D7_PORT, D7_PIN);
+ 0115 4107BF            and REG[0x7],-65
+ 0118                   .dbline 40
+ 0118 7110              or F,0x10  ; iopage = 1
+ 011A 430540            or REG[0x5],64
+ 011D 70EF              and F,0xEF ; iopage = 0
+ 011F                   .dbline 40
+ 011F 7110              or F,0x10  ; iopage = 1
+ 0121 430440            or REG[0x4],64
+ 0124 70EF              and F,0xEF ; iopage = 0
+ 0126                   .dbline 40
+ 0126 430440            or REG[0x4],64
+ 0129                   .dbline -2
+ 0129                   .dbline 41
+ 0129           ; }
+ 0129           L2:
+ 0129                   .dbline 0 ; func end
+ 0129 7F                ret
+ 012A                   .dbend
+ 012A                   .dbfunc e apu_put_data _apu_put_data fV
+ 012A           ;           data -> X-4
+ 012A           _apu_put_data::
+ 012A                   .dbline -1
+ 012A 10                push X
+ 012B 4F                mov X,SP
+ 012C                   .dbline 44
+ 012C           ; 
+ 012C           ; void apu_put_data(unsigned char data)
+ 012C           ; {
+ 012C                   .dbline 47
+ 012C           ;       // this is gross!!!
+ 012C           ;       
+ 012C           ;       if (data & 0x01)
+ 012C 48FC01            tst [X-4],1
+ 012F A006              jz L4
+ 0131                   .dbline 48
+ 0131           ;               SET_DATA(D0_PORT, D0_PIN);
+ 0131 430810            or REG[0x8],16
+ 0134 8004              xjmp L5
+ 0136           L4:
+ 0136                   .dbline 50
+ 0136           ;       else
+ 0136           ;               CLR_DATA(D0_PORT, D0_PIN);
+ 0136 4108EF            and REG[0x8],-17
+ 0139           L5:
+ 0139                   .dbline 52
+ 0139           ;       
+ 0139           ;       if (data & 0x02)
+ 0139 48FC02            tst [X-4],2
+ 013C A006              jz L6
+ 013E                   .dbline 53
+ 013E           ;               SET_DATA(D1_PORT, D1_PIN);
+ 013E 430820            or REG[0x8],32
+ 0141 8004              xjmp L7
+ 0143           L6:
+ 0143                   .dbline 55
+ 0143           ;       else
+ 0143           ;               CLR_DATA(D1_PORT, D1_PIN);
+ 0143 4108DF            and REG[0x8],-33
+ 0146           L7:
+ 0146                   .dbline 57
+ 0146           ;       
+ 0146           ;       if (data & 0x04)
+ 0146 48FC04            tst [X-4],4
+ 0149 A006              jz L8
+ 014B                   .dbline 58
+ 014B           ;               SET_DATA(D2_PORT, D2_PIN);
+ 014B 430840            or REG[0x8],64
+ 014E 8004              xjmp L9
+ 0150           L8:
+ 0150                   .dbline 60
+ 0150           ;       else
+ 0150           ;               CLR_DATA(D2_PORT, D2_PIN);
+ 0150 4108BF            and REG[0x8],-65
+ 0153           L9:
+ 0153                   .dbline 62
+ 0153           ;       
+ 0153           ;       if (data & 0x08)
+ 0153 48FC08            tst [X-4],8
+ 0156 A006              jz L10
+ 0158                   .dbline 63
+ 0158           ;               SET_DATA(D3_PORT, D3_PIN);
+ 0158 430808            or REG[0x8],8
+ 015B 8004              xjmp L11
+ 015D           L10:
+ 015D                   .dbline 65
+ 015D           ;       else
+ 015D           ;               CLR_DATA(D3_PORT, D3_PIN);
+ 015D 4108F7            and REG[0x8],-9
+ 0160           L11:
+ 0160                   .dbline 67
+ 0160           ;       
+ 0160           ;       if (data & 0x10)
+ 0160 48FC10            tst [X-4],16
+ 0163 A006              jz L12
+ 0165                   .dbline 68
+ 0165           ;               SET_DATA(D4_PORT, D4_PIN);
+ 0165 430001            or REG[ 0],1
+ 0168 8004              xjmp L13
+ 016A           L12:
+ 016A                   .dbline 70
+ 016A           ;       else
+ 016A           ;               CLR_DATA(D4_PORT, D4_PIN);
+ 016A 4100FE            and REG[ 0],-2
+ 016D           L13:
+ 016D                   .dbline 72
+ 016D           ;       
+ 016D           ;       if (data & 0x20)
+ 016D 48FC20            tst [X-4],32
+ 0170 A006              jz L14
+ 0172                   .dbline 73
+ 0172           ;               SET_DATA(D5_PORT, D5_PIN);
+ 0172 430802            or REG[0x8],2
+ 0175 8004              xjmp L15
+ 0177           L14:
+ 0177                   .dbline 75
+ 0177           ;       else
+ 0177           ;               CLR_DATA(D5_PORT, D5_PIN);
+ 0177 4108FD            and REG[0x8],-3
+ 017A           L15:
+ 017A                   .dbline 77
+ 017A           ;       
+ 017A           ;       if (data & 0x40)
+ 017A 48FC40            tst [X-4],64
+ 017D A006              jz L16
+ 017F                   .dbline 78
+ 017F           ;               SET_DATA(D6_PORT, D6_PIN);
+ 017F 430004            or REG[ 0],4
+ 0182 8004              xjmp L17
+ 0184           L16:
+ 0184                   .dbline 80
+ 0184           ;       else
+ 0184           ;               CLR_DATA(D6_PORT, D6_PIN);
+ 0184 4100FB            and REG[ 0],-5
+ 0187           L17:
+ 0187                   .dbline 82
+ 0187           ;       
+ 0187           ;       if (data & 0x80)
+ 0187 48FC80            tst [X-4],-128
+ 018A A006              jz L18
+ 018C                   .dbline 83
+ 018C           ;               SET_DATA(D7_PORT, D7_PIN);
+ 018C 430440            or REG[0x4],64
+ 018F 8004              xjmp L19
+ 0191           L18:
+ 0191                   .dbline 85
+ 0191 4104BF            and REG[0x4],-65
+ 0194           L19:
+ 0194                   .dbline -2
+ 0194                   .dbline 86
+ 0194           ;       else
+ 0194           ;               CLR_DATA(D7_PORT, D7_PIN);
+ 0194           ; }
+ 0194           L3:
+ 0194 20                pop X
+ 0195                   .dbline 0 ; func end
+ 0195 7F                ret
+ 0196                   .dbsym l data -4 c
+ 0196                   .dbend
+ 0196                   .dbfunc e apu_get_data _apu_get_data fc
+ 0196           ;         indata -> X+0
+ 0196           _apu_get_data::
+ 0196                   .dbline -1
+ 0196 10                push X
+ 0197 4F                mov X,SP
+ 0198 3811              add SP,17
+ 019A                   .dbline 89
+ 019A           ; 
+ 019A           ; unsigned char apu_get_data(void)
+ 019A           ; {
+ 019A                   .dbline 91
+ 019A           ;       // this is also pretty ugly
+ 019A           ;       unsigned char indata = 0x00;
+ 019A 560000            mov [X+0],0
+ 019D                   .dbline 93
+ 019D           ;       
+ 019D           ;       indata |= (GET_DATA(D6_PORT, D6_PIN)) ? 0x40 : 0x00;
+ 019D 490004            tst REG[ 0],4
+ 01A0 A009              jz L22
+ 01A2 560240            mov [X+2],64
+ 01A5 560100            mov [X+1],0
+ 01A8 8007              xjmp L23
+ 01AA           L22:
+ 01AA 560200            mov [X+2],0
+ 01AD 560100            mov [X+1],0
+ 01B0           L23:
+ 01B0 62D000            mov REG[0xd0],>__r0
+ 01B3 5200              mov A,[X+0]
+ 01B5 5300              mov [__r1],A
+ 01B7 550000            mov [__r0],0
+ 01BA 5202              mov A,[X+2]
+ 01BC 2C00              or [__r1],A
+ 01BE 5201              mov A,[X+1]
+ 01C0 2C00              or [__r0],A
+ 01C2 5100              mov A,[__r1]
+ 01C4 5400              mov [X+0],A
+ 01C6                   .dbline 94
+ 01C6           ;       indata |= (GET_DATA(D0_PORT, D0_PIN)) ? 0x01 : 0x00;
+ 01C6 490810            tst REG[0x8],16
+ 01C9 A009              jz L25
+ 01CB 560401            mov [X+4],1
+ 01CE 560300            mov [X+3],0
+ 01D1 8007              xjmp L26
+ 01D3           L25:
+ 01D3 560400            mov [X+4],0
+ 01D6 560300            mov [X+3],0
+ 01D9           L26:
+ 01D9 62D000            mov REG[0xd0],>__r0
+ 01DC 5200              mov A,[X+0]
+ 01DE 5300              mov [__r1],A
+ 01E0 550000            mov [__r0],0
+ 01E3 5204              mov A,[X+4]
+ 01E5 2C00              or [__r1],A
+ 01E7 5203              mov A,[X+3]
+ 01E9 2C00              or [__r0],A
+ 01EB 5100              mov A,[__r1]
+ 01ED 5400              mov [X+0],A
+ 01EF                   .dbline 95
+ 01EF           ;       indata |= (GET_DATA(D1_PORT, D1_PIN)) ? 0x02 : 0x00;
+ 01EF 490820            tst REG[0x8],32
+ 01F2 A009              jz L28
+ 01F4 560602            mov [X+6],2
+ 01F7 560500            mov [X+5],0
+ 01FA 8007              xjmp L29
+ 01FC           L28:
+ 01FC 560600            mov [X+6],0
+ 01FF 560500            mov [X+5],0
+ 0202           L29:
+ 0202 62D000            mov REG[0xd0],>__r0
+ 0205 5200              mov A,[X+0]
+ 0207 5300              mov [__r1],A
+ 0209 550000            mov [__r0],0
+ 020C 5206              mov A,[X+6]
+ 020E 2C00              or [__r1],A
+ 0210 5205              mov A,[X+5]
+ 0212 2C00              or [__r0],A
+ 0214 5100              mov A,[__r1]
+ 0216 5400              mov [X+0],A
+ 0218                   .dbline 96
+ 0218           ;       indata |= (GET_DATA(D2_PORT, D2_PIN)) ? 0x04 : 0x00;
+ 0218 490840            tst REG[0x8],64
+ 021B A009              jz L31
+ 021D 560804            mov [X+8],4
+ 0220 560700            mov [X+7],0
+ 0223 8007              xjmp L32
+ 0225           L31:
+ 0225 560800            mov [X+8],0
+ 0228 560700            mov [X+7],0
+ 022B           L32:
+ 022B 62D000            mov REG[0xd0],>__r0
+ 022E 5200              mov A,[X+0]
+ 0230 5300              mov [__r1],A
+ 0232 550000            mov [__r0],0
+ 0235 5208              mov A,[X+8]
+ 0237 2C00              or [__r1],A
+ 0239 5207              mov A,[X+7]
+ 023B 2C00              or [__r0],A
+ 023D 5100              mov A,[__r1]
+ 023F 5400              mov [X+0],A
+ 0241                   .dbline 97
+ 0241           ;       indata |= (GET_DATA(D3_PORT, D3_PIN)) ? 0x08 : 0x00;
+ 0241 490808            tst REG[0x8],8
+ 0244 A009              jz L34
+ 0246 560A08            mov [X+10],8
+ 0249 560900            mov [X+9],0
+ 024C 8007              xjmp L35
+ 024E           L34:
+ 024E 560A00            mov [X+10],0
+ 0251 560900            mov [X+9],0
+ 0254           L35:
+ 0254 62D000            mov REG[0xd0],>__r0
+ 0257 5200              mov A,[X+0]
+ 0259 5300              mov [__r1],A
+ 025B 550000            mov [__r0],0
+ 025E 520A              mov A,[X+10]
+ 0260 2C00              or [__r1],A
+ 0262 5209              mov A,[X+9]
+ 0264 2C00              or [__r0],A
+ 0266 5100              mov A,[__r1]
+ 0268 5400              mov [X+0],A
+ 026A                   .dbline 98
+ 026A           ;       indata |= (GET_DATA(D4_PORT, D4_PIN)) ? 0x10 : 0x00;
+ 026A 490001            tst REG[ 0],1
+ 026D A009              jz L37
+ 026F 560C10            mov [X+12],16
+ 0272 560B00            mov [X+11],0
+ 0275 8007              xjmp L38
+ 0277           L37:
+ 0277 560C00            mov [X+12],0
+ 027A 560B00            mov [X+11],0
+ 027D           L38:
+ 027D 62D000            mov REG[0xd0],>__r0
+ 0280 5200              mov A,[X+0]
+ 0282 5300              mov [__r1],A
+ 0284 550000            mov [__r0],0
+ 0287 520C              mov A,[X+12]
+ 0289 2C00              or [__r1],A
+ 028B 520B              mov A,[X+11]
+ 028D 2C00              or [__r0],A
+ 028F 5100              mov A,[__r1]
+ 0291 5400              mov [X+0],A
+ 0293                   .dbline 99
+ 0293           ;       indata |= (GET_DATA(D5_PORT, D5_PIN)) ? 0x20 : 0x00;
+ 0293 490802            tst REG[0x8],2
+ 0296 A009              jz L40
+ 0298 560E20            mov [X+14],32
+ 029B 560D00            mov [X+13],0
+ 029E 8007              xjmp L41
+ 02A0           L40:
+ 02A0 560E00            mov [X+14],0
+ 02A3 560D00            mov [X+13],0
+ 02A6           L41:
+ 02A6 62D000            mov REG[0xd0],>__r0
+ 02A9 5200              mov A,[X+0]
+ 02AB 5300              mov [__r1],A
+ 02AD 550000            mov [__r0],0
+ 02B0 520E              mov A,[X+14]
+ 02B2 2C00              or [__r1],A
+ 02B4 520D              mov A,[X+13]
+ 02B6 2C00              or [__r0],A
+ 02B8 5100              mov A,[__r1]
+ 02BA 5400              mov [X+0],A
+ 02BC                   .dbline 100
+ 02BC           ;       indata |= (GET_DATA(D7_PORT, D7_PIN)) ? 0x80 : 0x00;
+ 02BC 490440            tst REG[0x4],64
+ 02BF A009              jz L43
+ 02C1 561080            mov [X+16],-128
+ 02C4 560F00            mov [X+15],0
+ 02C7 8007              xjmp L44
+ 02C9           L43:
+ 02C9 561000            mov [X+16],0
+ 02CC 560F00            mov [X+15],0
+ 02CF           L44:
+ 02CF 62D000            mov REG[0xd0],>__r0
+ 02D2 5200              mov A,[X+0]
+ 02D4 5300              mov [__r1],A
+ 02D6 550000            mov [__r0],0
+ 02D9 5210              mov A,[X+16]
+ 02DB 2C00              or [__r1],A
+ 02DD 520F              mov A,[X+15]
+ 02DF 2C00              or [__r0],A
+ 02E1 5100              mov A,[__r1]
+ 02E3 5400              mov [X+0],A
+ 02E5                   .dbline 102
+ 02E5           ;       
+ 02E5           ;       return indata;
+ 02E5 5200              mov A,[X+0]
+ 02E7                   .dbline -2
+ 02E7           L20:
+ 02E7 38EF              add SP,-17
+ 02E9 20                pop X
+ 02EA                   .dbline 0 ; func end
+ 02EA 7F                ret
+ 02EB                   .dbsym l indata 0 c
+ 02EB                   .dbend
+ 02EB                   .dbfunc e apu_set_address _apu_set_address fV
+ 02EB           ;        address -> X-5
+ 02EB           _apu_set_address::
+ 02EB                   .dbline -1
+ 02EB 10                push X
+ 02EC 4F                mov X,SP
+ 02ED                   .dbline 106
+ 02ED           ; }
+ 02ED           ; 
+ 02ED           ; void apu_set_address(int address)
+ 02ED           ; {
+ 02ED                   .dbline 119
+ 02ED           ;       //GO_OUTPUT(PA0_PORT, PA0_PIN);
+ 02ED           ;       //GO_OUTPUT(PA1_PORT, PA1_PIN);
+ 02ED           ; 
+ 02ED           ; #ifdef ADDR_DEBUG
+ 02ED           ; 
+ 02ED           ;       UART_CPutString("Address = 0x");
+ 02ED           ;       UART_PutSHexByte(address);
+ 02ED           ;       UART_PutCRLF();
+ 02ED           ;       UART_FLUSH();
+ 02ED           ; #endif
+ 02ED           ; 
+ 02ED           ;       // this is gross: set address lines
+ 02ED           ;       if (address & 0x02) // PA0
+ 02ED 62D000            mov REG[0xd0],>__r0
+ 02F0 52FC              mov A,[X-4]
+ 02F2 2102              and A,2
+ 02F4 5300              mov [__r1],A
+ 02F6 52FB              mov A,[X-5]
+ 02F8 2100              and A,0
+ 02FA 3900              cmp A,0
+ 02FC B006              jnz X0
+ 02FE 3C0000            cmp [__r1],0
+ 0301 A006              jz L46
+ 0303           X0:
+ 0303                   .dbline 120
+ 0303           ;       {
+ 0303                   .dbline 121
+ 0303           ;               SET_DATA(PA0_PORT, PA0_PIN);
+ 0303 430801            or REG[0x8],1
+ 0306                   .dbline 127
+ 0306           ; #ifdef ADDR_DEBUG
+ 0306           ;               UART_CPutString("PA0 up");
+ 0306           ;               UART_PutCRLF();
+ 0306           ;               UART_FLUSH();
+ 0306           ; #endif
+ 0306           ; }
+ 0306 8004              xjmp L47
+ 0308           L46:
+ 0308                   .dbline 129
+ 0308           ;       else
+ 0308           ;       {
+ 0308                   .dbline 135
+ 0308           ; #ifdef ADDR_DEBUG
+ 0308           ;               UART_CPutString("PA0 down");
+ 0308           ;               UART_PutCRLF();
+ 0308           ;               UART_FLUSH();
+ 0308           ; #endif
+ 0308           ;               CLR_DATA(PA0_PORT, PA0_PIN);
+ 0308 4108FE            and REG[0x8],-2
+ 030B                   .dbline 136
+ 030B           ;       }
+ 030B           L47:
+ 030B                   .dbline 138
+ 030B           ;       
+ 030B           ;       if (address & 0x01) // PA1
+ 030B 62D000            mov REG[0xd0],>__r0
+ 030E 52FC              mov A,[X-4]
+ 0310 2101              and A,1
+ 0312 5300              mov [__r1],A
+ 0314 52FB              mov A,[X-5]
+ 0316 2100              and A,0
+ 0318 3900              cmp A,0
+ 031A B006              jnz X1
+ 031C 3C0000            cmp [__r1],0
+ 031F A006              jz L48
+ 0321           X1:
+ 0321                   .dbline 139
+ 0321           ;       {
+ 0321                   .dbline 145
+ 0321           ; #ifdef ADDR_DEBUG
+ 0321           ;               UART_CPutString("PA1 up");
+ 0321           ;               UART_PutCRLF();
+ 0321           ;               UART_FLUSH();
+ 0321           ; #endif
+ 0321           ;               SET_DATA(PA1_PORT, PA1_PIN);
+ 0321 430004            or REG[ 0],4
+ 0324                   .dbline 146
+ 0324           ;       }
+ 0324 8004              xjmp L49
+ 0326           L48:
+ 0326                   .dbline 148
+ 0326                   .dbline 154
+ 0326 4100FB            and REG[ 0],-5
+ 0329                   .dbline 155
+ 0329           L49:
+ 0329                   .dbline -2
+ 0329                   .dbline 156
+ 0329           ;       else
+ 0329           ;       {
+ 0329           ; #ifdef ADDR_DEBUG
+ 0329           ;               UART_CPutString("PA1 down");
+ 0329           ;               UART_PutCRLF();
+ 0329           ;               UART_FLUSH();
+ 0329           ; #endif
+ 0329           ;               CLR_DATA(PA1_PORT, PA1_PIN);
+ 0329           ;       }
+ 0329           ; }
+ 0329           L45:
+ 0329 20                pop X
+ 032A                   .dbline 0 ; func end
+ 032A 7F                ret
+ 032B                   .dbsym l address -5 I
+ 032B                   .dbend
+ 032B                   .dbfunc e apu_init _apu_init fV
+ 032B           _apu_init::
+ 032B                   .dbline -1
+ 032B                   .dbline 159
+ 032B           ; 
+ 032B           ; void apu_init(void)
+ 032B           ; {
+ 032B                   .dbline 160
+ 032B           ;       GO_OUTPUT(_RESET_PORT, _RESET_PIN);
+ 032B 430310            or REG[0x3],16
+ 032E                   .dbline 160
+ 032E 7110              or F,0x10  ; iopage = 1
+ 0330 4101EF            and REG[0x1],-17
+ 0333 70EF              and F,0xEF ; iopage = 0
+ 0335                   .dbline 160
+ 0335 7110              or F,0x10  ; iopage = 1
+ 0337 430010            or REG[ 0],16
+ 033A 70EF              and F,0xEF ; iopage = 0
+ 033C                   .dbline 161
+ 033C           ;       GO_OUTPUT(_RD_PORT, _RD_PIN);
+ 033C 430B80            or REG[0xb],-128
+ 033F                   .dbline 161
+ 033F 7110              or F,0x10  ; iopage = 1
+ 0341 41097F            and REG[0x9],127
+ 0344 70EF              and F,0xEF ; iopage = 0
+ 0346                   .dbline 161
+ 0346 7110              or F,0x10  ; iopage = 1
+ 0348 430880            or REG[0x8],-128
+ 034B 70EF              and F,0xEF ; iopage = 0
+ 034D                   .dbline 162
+ 034D           ;       GO_OUTPUT(_WR_PORT, _WR_PIN);
+ 034D 430B04            or REG[0xb],4
+ 0350                   .dbline 162
+ 0350 7110              or F,0x10  ; iopage = 1
+ 0352 4109FB            and REG[0x9],-5
+ 0355 70EF              and F,0xEF ; iopage = 0
+ 0357                   .dbline 162
+ 0357 7110              or F,0x10  ; iopage = 1
+ 0359 430804            or REG[0x8],4
+ 035C 70EF              and F,0xEF ; iopage = 0
+ 035E                   .dbline 164
+ 035E           ;       
+ 035E           ;       GO_OUTPUT(PA0_PORT, PA0_PIN);
+ 035E 430B01            or REG[0xb],1
+ 0361                   .dbline 164
+ 0361 7110              or F,0x10  ; iopage = 1
+ 0363 4109FE            and REG[0x9],-2
+ 0366 70EF              and F,0xEF ; iopage = 0
+ 0368                   .dbline 164
+ 0368 7110              or F,0x10  ; iopage = 1
+ 036A 430801            or REG[0x8],1
+ 036D 70EF              and F,0xEF ; iopage = 0
+ 036F                   .dbline 165
+ 036F           ;       GO_OUTPUT(PA1_PORT, PA1_PIN);
+ 036F 430304            or REG[0x3],4
+ 0372                   .dbline 165
+ 0372 7110              or F,0x10  ; iopage = 1
+ 0374 4101FB            and REG[0x1],-5
+ 0377 70EF              and F,0xEF ; iopage = 0
+ 0379                   .dbline 165
+ 0379 7110              or F,0x10  ; iopage = 1
+ 037B 430004            or REG[ 0],4
+ 037E 70EF              and F,0xEF ; iopage = 0
+ 0380                   .dbline 167
+ 0380           ;       
+ 0380           ;       go_data_output();
+ 0380 9C7E              xcall _go_data_output
+ 0382                   .dbline 169
+ 0382           ;       
+ 0382           ;       CLR_DATA(_RESET_PORT, _RESET_PIN); // hold in reset
+ 0382 4100EF            and REG[ 0],-17
+ 0385                   .dbline 170
+ 0385           ;       SET_DATA(_RD_PORT, _RD_PIN);
+ 0385 430880            or REG[0x8],-128
+ 0388                   .dbline 171
+ 0388           ;       SET_DATA(_WR_PORT, _WR_PIN);
+ 0388 430804            or REG[0x8],4
+ 038B                   .dbline -2
+ 038B                   .dbline 172
+ 038B           ; }
+ 038B           L50:
+ 038B                   .dbline 0 ; func end
+ 038B 7F                ret
+ 038C                   .dbend
+ 038C                   .dbfunc e apu_shutdown _apu_shutdown fV
+ 038C           _apu_shutdown::
+ 038C                   .dbline -1
+ 038C                   .dbline 175
+ 038C           ; 
+ 038C           ; void apu_shutdown(void)
+ 038C           ; {
+ 038C                   .dbline 176
+ 038C           ;       CLR_DATA(_RESET_PORT, _RESET_PIN); // hold in reset
+ 038C 4100EF            and REG[ 0],-17
+ 038F                   .dbline 177
+ 038F           ;       SET_DATA(_RD_PORT, _RD_PIN);
+ 038F 430880            or REG[0x8],-128
+ 0392                   .dbline 178
+ 0392           ;       SET_DATA(_WR_PORT, _WR_PIN);
+ 0392 430804            or REG[0x8],4
+ 0395                   .dbline -2
+ 0395                   .dbline 179
+ 0395           ; }
+ 0395           L51:
+ 0395                   .dbline 0 ; func end
+ 0395 7F                ret
+ 0396                   .dbend
+ 0396                   .dbfunc e apu_reset _apu_reset fV
+ 0396           ;              i -> X+0
+ 0396           _apu_reset::
+ 0396                   .dbline -1
+ 0396 10                push X
+ 0397 4F                mov X,SP
+ 0398 3802              add SP,2
+ 039A                   .dbline 182
+ 039A           ; 
+ 039A           ; void apu_reset(void)
+ 039A           ; {
+ 039A                   .dbline 185
+ 039A           ;       int i;
+ 039A           ;       
+ 039A           ;       SET_DATA(_RD_PORT, _RD_PIN);
+ 039A 430880            or REG[0x8],-128
+ 039D                   .dbline 186
+ 039D           ;       SET_DATA(_WR_PORT, _WR_PIN);
+ 039D 430804            or REG[0x8],4
+ 03A0                   .dbline 188
+ 03A0           ;       
+ 03A0           ;       CLR_DATA(_RESET_PORT, _RESET_PIN); // put in reset
+ 03A0 4100EF            and REG[ 0],-17
+ 03A3                   .dbline 190
+ 03A3           ;       
+ 03A3           ;       for(i=0; i<RESET_DELAY; i++)
+ 03A3 560100            mov [X+1],0
+ 03A6 560000            mov [X+0],0
+ 03A9           L53:
+ 03A9                   .dbline 191
+ 03A9                   .dbline 191
+ 03A9           L54:
+ 03A9                   .dbline 190
+ 03A9 7701              inc [X+1]
+ 03AB 0F0000            adc [X+0],0
+ 03AE                   .dbline 190
+ 03AE 5201              mov A,[X+1]
+ 03B0 114C              sub A,76
+ 03B2 5200              mov A,[X+0]
+ 03B4 3180              xor A,-128
+ 03B6 199D              sbb A,(29 ^ 0x80)
+ 03B8 CFF0              jc L53
+ 03BA           X2:
+ 03BA                   .dbline 193
+ 03BA           ;               { }
+ 03BA           ;       
+ 03BA           ;       SET_DATA(_RESET_PORT, _RESET_PIN); // exit from reset
+ 03BA 430010            or REG[ 0],16
+ 03BD                   .dbline 195
+ 03BD           ;       
+ 03BD           ;       for(i=0; i<RESET_DELAY; i++)
+ 03BD 560100            mov [X+1],0
+ 03C0 560000            mov [X+0],0
+ 03C3           L57:
+ 03C3                   .dbline 196
+ 03C3                   .dbline 196
+ 03C3           L58:
+ 03C3                   .dbline 195
+ 03C3 7701              inc [X+1]
+ 03C5 0F0000            adc [X+0],0
+ 03C8                   .dbline 195
+ 03C8 5201              mov A,[X+1]
+ 03CA 114C              sub A,76
+ 03CC 5200              mov A,[X+0]
+ 03CE 3180              xor A,-128
+ 03D0 199D              sbb A,(29 ^ 0x80)
+ 03D2 CFF0              jc L57
+ 03D4           X3:
+ 03D4                   .dbline -2
+ 03D4                   .dbline 198
+ 03D4           ;               { }
+ 03D4           ;       
+ 03D4           ; }
+ 03D4           L52:
+ 03D4 38FE              add SP,-2
+ 03D6 20                pop X
+ 03D7                   .dbline 0 ; func end
+ 03D7 7F                ret
+ 03D8                   .dbsym l i 0 I
+ 03D8                   .dbend
+ 03D8                   .dbfunc e apu_write _apu_write fV
+ 03D8           ;              i -> X+0
+ 03D8           ;           data -> X-6
+ 03D8           ;        address -> X-5
+ 03D8           _apu_write::
+ 03D8                   .dbline -1
+ 03D8 10                push X
+ 03D9 4F                mov X,SP
+ 03DA 3802              add SP,2
+ 03DC                   .dbline 201
+ 03DC           ; 
+ 03DC           ; void apu_write(int address, unsigned char data)
+ 03DC           ; {
+ 03DC                   .dbline 203
+ 03DC           ;       int i;
+ 03DC           ;       go_data_output();
+ 03DC 9C22              xcall _go_data_output
+ 03DE                   .dbline 205
+ 03DE           ;       
+ 03DE           ;       apu_set_address(address);
+ 03DE 52FB              mov A,[X-5]
+ 03E0 08                push A
+ 03E1 52FC              mov A,[X-4]
+ 03E3 08                push A
+ 03E4 9F05              xcall _apu_set_address
+ 03E6                   .dbline 207
+ 03E6           ;       
+ 03E6           ;       apu_put_data(data);
+ 03E6 52FA              mov A,[X-6]
+ 03E8 08                push A
+ 03E9 9D3F              xcall _apu_put_data
+ 03EB 38FD              add SP,-3
+ 03ED                   .dbline 209
+ 03ED           ;       
+ 03ED           ;       SET_DATA(_WR_PORT, _WR_PIN);
+ 03ED 430804            or REG[0x8],4
+ 03F0                   .dbline 210
+ 03F0           ;       SET_DATA(_RD_PORT, _RD_PIN);
+ 03F0 430880            or REG[0x8],-128
+ 03F3                   .dbline 213
+ 03F3           ;       
+ 03F3           ;       // strobe write pin
+ 03F3           ;       CLR_DATA(_WR_PORT, _WR_PIN);
+ 03F3 4108FB            and REG[0x8],-5
+ 03F6                   .dbline 214
+ 03F6           ;       for(i=0; i<WRITE_DELAY; i++)
+ 03F6 560100            mov [X+1],0
+ 03F9 560000            mov [X+0],0
+ 03FC           L62:
+ 03FC                   .dbline 215
+ 03FC                   .dbline 215
+ 03FC           L63:
+ 03FC                   .dbline 214
+ 03FC 7701              inc [X+1]
+ 03FE 0F0000            adc [X+0],0
+ 0401                   .dbline 214
+ 0401 5201              mov A,[X+1]
+ 0403 110A              sub A,10
+ 0405 5200              mov A,[X+0]
+ 0407 3180              xor A,-128
+ 0409 1980              sbb A,(0 ^ 0x80)
+ 040B CFF0              jc L62
+ 040D           X4:
+ 040D                   .dbline 216
+ 040D           ;               { }
+ 040D           ;       SET_DATA(_WR_PORT, _WR_PIN);
+ 040D 430804            or REG[0x8],4
+ 0410                   .dbline -2
+ 0410                   .dbline 218
+ 0410           ;       
+ 0410           ; }
+ 0410           L61:
+ 0410 38FE              add SP,-2
+ 0412 20                pop X
+ 0413                   .dbline 0 ; func end
+ 0413 7F                ret
+ 0414                   .dbsym l i 0 I
+ 0414                   .dbsym l data -6 c
+ 0414                   .dbsym l address -5 I
+ 0414                   .dbend
+ 0414                   .dbfunc e apu_read _apu_read fc
+ 0414           ;           data -> X+2
+ 0414           ;              i -> X+0
+ 0414           ;        address -> X-5
+ 0414           _apu_read::
+ 0414                   .dbline -1
+ 0414 10                push X
+ 0415 4F                mov X,SP
+ 0416 3803              add SP,3
+ 0418                   .dbline 221
+ 0418           ; 
+ 0418           ; unsigned char apu_read(int address)
+ 0418           ; {
+ 0418                   .dbline 225
+ 0418           ;       unsigned char data;
+ 0418           ;       int i;
+ 0418           ;       
+ 0418           ;       go_data_input();
+ 0418 9C6F              xcall _go_data_input
+ 041A                   .dbline 226
+ 041A           ;       data = apu_get_data(); // dummy read debugging
+ 041A 9D7A              xcall _apu_get_data
+ 041C 62D000            mov REG[0xd0],>__r0
+ 041F 5402              mov [X+2],A
+ 0421                   .dbline 228
+ 0421           ;       
+ 0421           ;       apu_set_address(address);
+ 0421 52FB              mov A,[X-5]
+ 0423 08                push A
+ 0424 52FC              mov A,[X-4]
+ 0426 08                push A
+ 0427 9EC2              xcall _apu_set_address
+ 0429 38FE              add SP,-2
+ 042B                   .dbline 230
+ 042B           ;       
+ 042B           ;       SET_DATA(_RD_PORT, _RD_PIN);
+ 042B 430880            or REG[0x8],-128
+ 042E                   .dbline 231
+ 042E           ;       SET_DATA(_WR_PORT, _WR_PIN);
+ 042E 430804            or REG[0x8],4
+ 0431                   .dbline 234
+ 0431           ;       
+ 0431           ;       // strobe read pin
+ 0431           ;       CLR_DATA(_RD_PORT, _RD_PIN);
+ 0431 41087F            and REG[0x8],127
+ 0434                   .dbline 236
+ 0434           ;       
+ 0434           ;       for(i=0; i<READ_DELAY; i++)
+ 0434 560100            mov [X+1],0
+ 0437 560000            mov [X+0],0
+ 043A           L67:
+ 043A                   .dbline 237
+ 043A                   .dbline 237
+ 043A           L68:
+ 043A                   .dbline 236
+ 043A 7701              inc [X+1]
+ 043C 0F0000            adc [X+0],0
+ 043F                   .dbline 236
+ 043F 5201              mov A,[X+1]
+ 0441 110A              sub A,10
+ 0443 5200              mov A,[X+0]
+ 0445 3180              xor A,-128
+ 0447 1980              sbb A,(0 ^ 0x80)
+ 0449 CFF0              jc L67
+ 044B           X5:
+ 044B                   .dbline 239
+ 044B           ;               { }
+ 044B           ;       
+ 044B           ;       data = apu_get_data();
+ 044B 9D49              xcall _apu_get_data
+ 044D 62D000            mov REG[0xd0],>__r0
+ 0450 5402              mov [X+2],A
+ 0452                   .dbline 240
+ 0452           ;       SET_DATA(_RD_PORT, _RD_PIN);
+ 0452 430880            or REG[0x8],-128
+ 0455                   .dbline 242
+ 0455           ;       
+ 0455           ;       return data;
+ 0455 5202              mov A,[X+2]
+ 0457                   .dbline -2
+ 0457           L66:
+ 0457 38FD              add SP,-3
+ 0459 20                pop X
+ 045A                   .dbline 0 ; func end
+ 045A 7F                ret
+ 045B                   .dbsym l data 2 c
+ 045B                   .dbsym l i 0 I
+ 045B                   .dbsym l address -5 I
+ 045B                   .dbend
+ 045B                   .dbfunc e sys_init _sys_init fV
+ 045B           _sys_init::
+ 045B                   .dbline -1
+ 045B                   .dbline 246
+ 045B           ; }
+ 045B           ; 
+ 045B           ; void sys_init(void)
+ 045B           ; {
+ 045B                   .dbline 247
+ 045B           ;       apu_init();
+ 045B 9ECE              xcall _apu_init
+ 045D                   .dbline -2
+ 045D                   .dbline 248
+ 045D           ; }
+ 045D           L71:
+ 045D                   .dbline 0 ; func end
+ 045D 7F                ret
+ 045E                   .dbend
+ 045E                   .dbfunc e start_rx _start_rx fV
+ 045E           ;           addr -> X+6
+ 045E           ;           addr -> X+6
+ 045E           ;         not_ok -> X+4
+ 045E           ;            msg -> X+2
+ 045E           ;            len -> X+0
+ 045E           _start_rx::
+ 045E                   .dbline -1
+ 045E 10                push X
+ 045F 4F                mov X,SP
+ 0460 3808              add SP,8
+ 0462                   .dbline 251
+ 0462           ; 
+ 0462           ; void start_rx(void)
+ 0462           ; {
+ 0462                   .dbline 254
+ 0462           ;       unsigned char msg[2];
+ 0462           ;       int len;
+ 0462           ;       int not_ok = 0;
+ 0462 560500            mov [X+5],0
+ 0465 560400            mov [X+4],0
+ 0468                   .dbline 256
+ 0468           ;       
+ 0468           ;     for(;;)
+ 0468           L73:
+ 0468                   .dbline 257
+ 0468           ;     {
+ 0468                   .dbline 258
+ 0468           ;               len = 0;
+ 0468 560100            mov [X+1],0
+ 046B 560000            mov [X+0],0
+ 046E                   .dbline 259
+ 046E           ;               if (not_ok)
+ 046E 3D0400            cmp [X+4],0
+ 0471 B006              jnz X8
+ 0473 3D0500            cmp [X+5],0
+ 0476 A015              jz L77
+ 0478           X8:
+ 0478                   .dbline 260
+ 0478           ;               {
+ 0478                   .dbline 261
+ 0478           ;                       UART_CPutString("N");
+ 0478 10                push X
+ 0479 5002              mov A,>L79
+ 047B 08                push A
+ 047C 5002              mov A,<L79
+ 047E 5C                mov X,A
+ 047F 18                pop A
+ 0480 7C0000            xcall _UART_CPutString
+ 0483 20                pop X
+ 0484                   .dbline 262
+ 0484           ;                       not_ok = 0;
+ 0484 560500            mov [X+5],0
+ 0487 560400            mov [X+4],0
+ 048A                   .dbline 263
+ 048A           ;               }
+ 048A 800D              xjmp L82
+ 048C           L77:
+ 048C                   .dbline 265
+ 048C           ;               else
+ 048C           ;               {
+ 048C                   .dbline 266
+ 048C           ;                       UART_CPutString("O");
+ 048C 10                push X
+ 048D 5000              mov A,>L80
+ 048F 08                push A
+ 0490 5000              mov A,<L80
+ 0492 5C                mov X,A
+ 0493 18                pop A
+ 0494 7C0000            xcall _UART_CPutString
+ 0497 20                pop X
+ 0498                   .dbline 267
+ 0498           ;               }
+ 0498           L81:
+ 0498                   .dbline 269
+ 0498                   .dbline 269
+ 0498           L82:
+ 0498                   .dbline 269
+ 0498 10                push X
+ 0499 7C0000            xcall _UART_bReadTxStatus
+ 049C 62D000            mov REG[0xd0],>__r0
+ 049F 20                pop X
+ 04A0 5300              mov [__r0],A
+ 04A2 470010            tst [__r0],16
+ 04A5 AFF2              jz L81
+ 04A7                   .dbline 269
+ 04A7 10                push X
+ 04A8 7C0000            xcall _UART_bReadTxStatus
+ 04AB 62D000            mov REG[0xd0],>__r0
+ 04AE 20                pop X
+ 04AF           L84:
+ 04AF                   .dbline 269
+ 04AF                   .dbline 269
+ 04AF           L85:
+ 04AF                   .dbline 269
+ 04AF           ;               //UART_PutCRLF();
+ 04AF           ;               UART_FLUSH();
+ 04AF 10                push X
+ 04B0 7C0000            xcall _UART_bReadTxStatus
+ 04B3 62D000            mov REG[0xd0],>__r0
+ 04B6 20                pop X
+ 04B7 5300              mov [__r0],A
+ 04B9 470020            tst [__r0],32
+ 04BC AFF2              jz L84
+ 04BE                   .dbline 269
+ 04BE                   .dbline 272
+ 04BE           ;               
+ 04BE           ;               do
+ 04BE           ;               {
+ 04BE           L90:
+ 04BE                   .dbline 274
+ 04BE                   .dbline 276
+ 04BE           L91:
+ 04BE                   .dbline 273
+ 04BE           ;                       while(!(UART_bReadRxStatus() & 0x08))
+ 04BE 10                push X
+ 04BF 7C0000            xcall _UART_bReadRxStatus
+ 04C2 62D000            mov REG[0xd0],>__r0
+ 04C5 20                pop X
+ 04C6 5300              mov [__r0],A
+ 04C8 470008            tst [__r0],8
+ 04CB AFF2              jz L90
+ 04CD                   .dbline 277
+ 04CD           ;                       {
+ 04CD           ;                               /* wait for data */
+ 04CD           ;                       }
+ 04CD           ;               msg[len++] = UART_bReadRxData();
+ 04CD 5201              mov A,[X+1]
+ 04CF 5300              mov [__r1],A
+ 04D1 5200              mov A,[X+0]
+ 04D3 5300              mov [__r0],A
+ 04D5 5100              mov A,[__r1]
+ 04D7 5407              mov [X+7],A
+ 04D9 5100              mov A,[__r0]
+ 04DB 5406              mov [X+6],A
+ 04DD 5100              mov A,[__r1]
+ 04DF 0101              add A,1
+ 04E1 5401              mov [X+1],A
+ 04E3 5100              mov A,[__r0]
+ 04E5 0900              adc A,0
+ 04E7 5400              mov [X+0],A
+ 04E9 10                push X
+ 04EA 7C0000            xcall _UART_bReadRxData
+ 04ED 62D000            mov REG[0xd0],>__r0
+ 04F0 20                pop X
+ 04F1 5300              mov [__r0],A
+ 04F3 550001            mov [__r2],1
+ 04F6 5A00              mov [__r3],X
+ 04F8 060002            add [__r3],2
+ 04FB 5207              mov A,[X+7]
+ 04FD 0200              add A,[__r3]
+ 04FF 5300              mov [__r3],A
+ 0501 5206              mov A,[X+6]
+ 0503 0A00              adc A,[__r2]
+ 0505 60D5              mov REG[0xd5],A
+ 0507 5100              mov A,[__r0]
+ 0509 3F00              mvi [__r3],A
+ 050B                   .dbline 279
+ 050B           L88:
+ 050B                   .dbline 279
+ 050B           ;                       
+ 050B           ;               } while(!(
+ 050B 3D0000            cmp [X+0],0
+ 050E B011              jnz L94
+ 0510 3D0101            cmp [X+1],1
+ 0513 B00C              jnz L94
+ 0515           X9:
+ 0515 62D000            mov REG[0xd0],>__r0
+ 0518 5202              mov A,[X+2]
+ 051A 21FC              and A,-4
+ 051C 39A8              cmp A,-88
+ 051E B00B              jnz L93
+ 0520           L94:
+ 0520 3D0000            cmp [X+0],0
+ 0523 BF9A              jnz L91
+ 0525 3D0102            cmp [X+1],2
+ 0528 BF95              jnz L91
+ 052A           X10:
+ 052A           L93:
+ 052A                   .dbline 284
+ 052A           ;                               ((len == 1) && ((msg[0] & 0xfc) != 0xa8)) ||
+ 052A           ;                               (len == 2)
+ 052A           ;                               ));
+ 052A           ;               
+ 052A           ;               if ((msg[0] & 0xfc) == 0xa8)
+ 052A 62D000            mov REG[0xd0],>__r0
+ 052D 5202              mov A,[X+2]
+ 052F 21FC              and A,-4
+ 0531 39A8              cmp A,-88
+ 0533 B01A              jnz L95
+ 0535                   .dbline 285
+ 0535           ;               {
+ 0535                   .dbline 287
+ 0535           ;                       // write
+ 0535           ;                       char addr = msg[0] & 0x3;
+ 0535 5202              mov A,[X+2]
+ 0537 2103              and A,3
+ 0539 5406              mov [X+6],A
+ 053B                   .dbline 289
+ 053B           ;                       
+ 053B           ;                       apu_write(addr, msg[1]);
+ 053B 5203              mov A,[X+3]
+ 053D 08                push A
+ 053E 5206              mov A,[X+6]
+ 0540 5300              mov [__r1],A
+ 0542 5000              mov A,0
+ 0544 08                push A
+ 0545 5100              mov A,[__r1]
+ 0547 08                push A
+ 0548 9E8E              xcall _apu_write
+ 054A 38FD              add SP,-3
+ 054C                   .dbline 290
+ 054C           ;               }
+ 054C 8F1B              xjmp L73
+ 054E           L95:
+ 054E                   .dbline 291
+ 054E           ;               else if ((msg[0] & 0xfc) == 0xd4)
+ 054E 62D000            mov REG[0xd0],>__r0
+ 0551 5202              mov A,[X+2]
+ 0553 21FC              and A,-4
+ 0555 39D4              cmp A,-44
+ 0557 B01F              jnz L98
+ 0559                   .dbline 292
+ 0559           ;               {
+ 0559                   .dbline 294
+ 0559           ;                       // read
+ 0559           ;                       char addr = msg[0] & 0x3;
+ 0559 5202              mov A,[X+2]
+ 055B 2103              and A,3
+ 055D 5406              mov [X+6],A
+ 055F                   .dbline 295
+ 055F           ;                       UART_PutChar(apu_read(addr));
+ 055F 5206              mov A,[X+6]
+ 0561 5300              mov [__r1],A
+ 0563 5000              mov A,0
+ 0565 08                push A
+ 0566 5100              mov A,[__r1]
+ 0568 08                push A
+ 0569 9EA9              xcall _apu_read
+ 056B 38FE              add SP,-2
+ 056D 62D000            mov REG[0xd0],>__r0
+ 0570 10                push X
+ 0571 7C0000            xcall _UART_PutChar
+ 0574 20                pop X
+ 0575                   .dbline 300
+ 0575           ;                       //UART_PutChar(0x60 | addr);
+ 0575           ;                       //UART_PutChar((unsigned char)0x69);
+ 0575           ;                       //UART_FLUSH();
+ 0575           ;                       //UART_PutCRLF();
+ 0575           ;               }
+ 0575 8EF2              xjmp L73
+ 0577           L98:
+ 0577                   .dbline 302
+ 0577           ;               else
+ 0577           ;               {
+ 0577                   .dbline 303
+ 0577           ;                       switch(msg[0])
+ 0577 5202              mov A,[X+2]
+ 0579 5407              mov [X+7],A
+ 057B 560600            mov [X+6],0
+ 057E 5207              mov A,[X+7]
+ 0580 1149              sub A,73
+ 0582 62D000            mov REG[0xd0],>__r0
+ 0585 5300              mov [__rY],A
+ 0587 5206              mov A,[X+6]
+ 0589 3180              xor A,-128
+ 058B 1980              sbb A,(0 ^ 0x80)
+ 058D C027              jc L100
+ 058F 2A00              or A,[__rY]
+ 0591 A017              jz L103
+ 0593           X11:
+ 0593           L106:
+ 0593 3D0600            cmp [X+6],0
+ 0596 B006              jnz X12
+ 0598 3D0752            cmp [X+7],82
+ 059B A011              jz L104
+ 059D           X12:
+ 059D 3D0600            cmp [X+6],0
+ 05A0 B006              jnz X13
+ 05A2 3D0753            cmp [X+7],83
+ 05A5 A00B              jz L105
+ 05A7           X13:
+ 05A7 800D              xjmp L100
+ 05A9           X6:
+ 05A9                   .dbline 304
+ 05A9           ;                       {
+ 05A9           L103:
+ 05A9                   .dbline 306
+ 05A9           ;                               case 'I':
+ 05A9           ;                                       apu_init();
+ 05A9 9D80              xcall _apu_init
+ 05AB                   .dbline 307
+ 05AB           ;                                       break;
+ 05AB 8EBC              xjmp L73
+ 05AD           L104:
+ 05AD                   .dbline 309
+ 05AD           ;                               case 'R':
+ 05AD           ;                                       apu_reset();
+ 05AD 9DE7              xcall _apu_reset
+ 05AF                   .dbline 310
+ 05AF           ;                                       break;
+ 05AF 8EB8              xjmp L73
+ 05B1           L105:
+ 05B1                   .dbline 312
+ 05B1           ;                               case 'S':
+ 05B1           ;                                       apu_shutdown();
+ 05B1 9DD9              xcall _apu_shutdown
+ 05B3                   .dbline 313
+ 05B3           ;                                       break;
+ 05B3 8EB4              xjmp L73
+ 05B5           L100:
+ 05B5                   .dbline 315
+ 05B5 560501            mov [X+5],1
+ 05B8 560400            mov [X+4],0
+ 05BB                   .dbline 316
+ 05BB                   .dbline 318
+ 05BB                   .dbline 321
+ 05BB                   .dbline 256
+ 05BB                   .dbline 256
+ 05BB 8EAC              xjmp L73
+ 05BD           X7:
+ 05BD                   .dbline -2
+ 05BD           L72:
+ 05BD 38F8              add SP,-8
+ 05BF 20                pop X
+ 05C0                   .dbline 0 ; func end
+ 05C0 7F                ret
+ 05C1                   .dbsym l addr 6 c
+ 05C1                   .dbsym l addr 6 c
+ 05C1                   .dbsym l not_ok 4 I
+ 05C1                   .dbsym l msg 2 A[2:2]c
+ 05C1                   .dbsym l len 0 I
+ 05C1                   .dbend
+ 05C1                   .dbfunc e main _main fV
+ 05C1           ;              i -> X+0
+ 05C1           _main::
+ 05C1                   .dbline -1
+ 05C1 10                push X
+ 05C2 4F                mov X,SP
+ 05C3 3802              add SP,2
+ 05C5                   .dbline 325
+ 05C5           ;                               default:
+ 05C5           ;                                       not_ok = 1;
+ 05C5           ;                                       break;
+ 05C5           ;                       }
+ 05C5           ;               }
+ 05C5           ;               
+ 05C5           ;       // UART_PutChar (... )
+ 05C5           ;     }
+ 05C5           ; }
+ 05C5           ; 
+ 05C5           ; void main()
+ 05C5           ; {
+ 05C5                   .dbline 328
+ 05C5           ;       int i;
+ 05C5           ;       
+ 05C5           ;       M8C_EnableGInt;
+ 05C5 7101                      or  F, 01h
+ 05C7           
+ 05C7                   .dbline 330
+ 05C7           ;       
+ 05C7           ;     LED_1_Start();
+ 05C7 10                push X
+ 05C8 7C0000            xcall _LED_1_Start
+ 05CB                   .dbline 331
+ 05CB           ;     LED_1_On();
+ 05CB 7C0000            xcall _LED_1_On
+ 05CE                   .dbline 333
+ 05CE           ;     
+ 05CE           ;     UART_Start(UART_PARITY_NONE);
+ 05CE 5000              mov A,0
+ 05D0 7C0000            xcall _UART_Start
+ 05D3 20                pop X
+ 05D4                   .dbline 335
+ 05D4           ;     
+ 05D4           ;       sys_init();
+ 05D4 9E85              xcall _sys_init
+ 05D6                   .dbline 351
+ 05D6           ; 
+ 05D6           ; #ifdef ADDR_DEBUG
+ 05D6           ;       for(;;)
+ 05D6           ;       {
+ 05D6           ;               int j;
+ 05D6           ;               for(i=0; i<4; i++)
+ 05D6           ;               {
+ 05D6           ;                       apu_set_address(i);
+ 05D6           ;                       //PRT2DR |= 0x01;
+ 05D6           ;                       for(j=0; j<i*1000;  j++)
+ 05D6           ;                               ;
+ 05D6           ;               }
+ 05D6           ;       }
+ 05D6           ; #endif        
+ 05D6           ;       
+ 05D6           ;       start_rx();
+ 05D6 9E86              xcall _start_rx
+ 05D8                   .dbline -2
+ 05D8                   .dbline 352
+ 05D8           ; }
+ 05D8           L107:
+ 05D8 38FE              add SP,-2
+ 05DA 20                pop X
+ 05DB                   .dbline 0 ; func end
+ 05DB 8FFF              jmp .
+ 05DD                   .dbsym l i 0 I
+ 05DD                   .dbend
+                        .area lit(rom, con, rel)
+ 0000           L80:
+ 0000 4F00              .byte 'O,0
+ 0002           L79:
+ 0002 4E00              .byte 'N,0
