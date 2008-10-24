@@ -1,0 +1,24 @@
+# DO NOT DELETE
+./obj/boot.o : \
+   C:/PROGRA~1/Cypress/Common/CY3E64~1/tools/include/CY8C21~1/m8c.inc\
+   C:/PROGRA~1/Cypress/Common/CY3E64~1/tools/include/CY8C21~1/m8ssc.inc\
+   C:\source\snesapu\snesapu\lib\GLOBAL~1.INC\
+   C:\source\snesapu\snesapu\memory.inc
+./obj/main.o :  ./lib/LED_1.h ./lib/PSoCAPI.h ./lib/UART.h\
+   C:/PROGRA~1/Cypress/Common/CY3E64~1/tools/include/CY8C21~1/m8c.h\
+   C:\source\snesapu\snesapu\apu_psoc.h
+./lib/obj/led_1.o :  ./lib/LED_1.inc\
+   C:/PROGRA~1/Cypress/Common/CY3E64~1/tools/include/CY8C21~1/m8c.inc\
+   C:\source\snesapu\snesapu\memory.inc
+./lib/obj/psocconfig.o :  ./lib/GLOBAL~1.INC\
+   C:/PROGRA~1/Cypress/Common/CY3E64~1/tools/include/CY8C21~1/m8c.inc\
+   C:\source\snesapu\snesapu\memory.inc
+./lib/obj/psocconfigtbl.o : \
+   C:/PROGRA~1/Cypress/Common/CY3E64~1/tools/include/CY8C21~1/m8c.inc
+./lib/obj/uart.o :  ./lib/UART.inc\
+   C:/PROGRA~1/Cypress/Common/CY3E64~1/tools/include/CY8C21~1/m8c.inc\
+   C:\source\snesapu\snesapu\memory.inc
+./lib/obj/uartint.o :  ./lib/UART.inc\
+   C:/PROGRA~1/Cypress/Common/CY3E64~1/tools/include/CY8C21~1/m8c.inc\
+   C:\source\snesapu\snesapu\memory.inc
+./lib/obj/uartplus.o : 

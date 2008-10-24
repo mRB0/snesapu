@@ -1,0 +1,10 @@
+-F0x30 -g -blit:0x150.0x1fff 
+ -bdata:0.0x100 -bSSCParmBlk:0x00F7.0x00FF -BInterruptRAM:0 -Bvirtual_registers  
+ -Bsnesapu_RAM   
+ -Bsnesapu_RAM   
+ -Bsnesapu_RAM   
+ -Bsnesapu_RAM   
+ -Bsnesapu_RAM 
+ -o"output/snesapu" 
+ ./obj/main.o   
+ C:/source/snesapu/snesapu/lib/libPSoc.a -LC:/PROGRA~1/Cypress/Common/CY3E64~1/tools/lib/LMM/eightpages C:/PROGRA~1/Cypress/Common/CY3E64~1/tools/lib/CY8C21030/cms.a C:/PROGRA~1/Cypress/Common/CY3E64~1/tools/lib/LMM/UASW/NoMAC/arith.a 

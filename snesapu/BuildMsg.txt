@@ -1,0 +1,21 @@
+Starting MAKE...
+creating project.mk 
+lib/led_1.asm
+lib/psocconfig.asm
+lib/psocconfigtbl.asm
+lib/uart.asm
+lib/uartint.asm
+lib/uartplus.asm
+./boot.asm
+./main.c
+ 
+Linking..
+LMM info: area 'InterruptRAM' uses 3 bytes in SRAM page 0
+LMM info: area 'UART_RAM' item of 16 bytes allocated in SRAM page 0
+LMM info: area 'virtual_registers' uses 5 bytes in SRAM page 0
+LMM info: area 'UART_RAM' item of 1 bytes allocated in SRAM page 0
+  ROM 31% full. 2451 bytes used (does not include absolute areas).
+  RAM 9% full. 25 bytes used (does not include stack usage).
+idata dump at output/snesapu.idata
+ 
+snesapu - 0 error(s) 0 warning(s) 12:48:30
